@@ -1,0 +1,66 @@
+<?xml version="1.0"?> 
+<sdf version="1.4">
+  <world name="default">
+
+    <!-- Ground Plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    
+
+   <model name ='sphere'>
+            
+            <link name ='link'>
+              <pose>0 0 0.4 0 0 0</pose>
+              <collision name ='collision'>
+                <geometry>
+                  <sphere><radius>0.3</radius></sphere>
+                </geometry>
+              </collision>
+              <visual name ='visual'>
+                <geometry>
+                  <sphere><radius>0.3</radius></sphere>
+                </geometry>
+  	      	<material>
+    			<ambient>0 0 1 1</ambient>
+    			<diffuse>0 0 1 1</diffuse>
+    			<specular>0.1 0.1 0.1 1</specular>
+    			<emissive>0 0 0 0</emissive>
+  		</material>
+              </visual>
+            </link>
+ 	  <plugin filename="build/libanimate_pose.so" name="pose_animation" />
+          <static>true</static>
+    </model>
+
+
+    <model name="My_robot">
+      <include>
+        <uri>model://my_robot</uri>
+      </include>
+      <pose>0 0 0 0 0 3.14</pose>
+       	 </model> 
+ 
+
+<!-- Light Source -->
+        <light type="directional" name="sun">
+            <pose>0 0 10 0 0 0</pose>
+            <diffuse>1.0 1.0 1.0 1</diffuse>
+            <specular>0 0 0 1</specular>
+            <attenuation>
+                <range>20</range>
+                <linear>0.01</linear>
+                <constant>0.8</constant>
+                <quadratic>0.0</quadratic>
+            </attenuation>
+            <direction>0.0 0.2 -8.0</direction>
+            <cast_shadows>true</cast_shadows>
+        </light>
+
+
+  </world>
+</sdf>
