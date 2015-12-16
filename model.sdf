@@ -1,0 +1,164 @@
+<?xml version='1.0'?>
+    <sdf version='1.4'>
+
+
+ <model name ='my_robot'>
+
+     <!-- Physics -->
+    <static>false</static>
+
+     <pose>-0 0 0 0 0 0</pose>
+
+     <link name ='motor1'>
+       <pose>0 0.0 0.0 0 0 0</pose>
+       <collision name ='collision_motor1'>
+         <geometry>
+           <box>
+	      <size>0.5 0.3 0.4</size>
+	   </box>
+         </geometry>
+       </collision>
+       <visual name ='visual_motor1'>
+         <geometry>
+           <box>
+	       <size>0.5 0.3 0.4</size>		
+	   </box>
+         </geometry>
+         <material>
+           <ambient>0 0 0 1</ambient>
+           <diffuse>0 0 0 1</diffuse>
+           <specular>0.1 0.1 0.1 1</specular>
+           <emissive>0 0 0 0</emissive>
+         </material>
+       </visual>
+      </link>
+
+     <link name='base'>
+        <pose>0 0 0.23 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.5 0.3 0.05</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.5 0.3 0.05</size>
+            </box>
+          </geometry>
+         <material>
+           <ambient>1 1 1 1</ambient>
+           <diffuse>1 1 1 1</diffuse>
+           <specular>0.1 0.1 0.1 1</specular>
+           <emissive>0 0 0 0</emissive>
+         </material>
+        </visual>
+	</link>
+
+   <joint type="revolute" name="pan">
+        <pose>0 0 0.4 0 0 0</pose>
+        <child>base</child>
+        <parent>motor1</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+        </axis>
+      </joint>
+
+
+     <link name ='motor2'>
+       <pose>0 0.0 0.5 0 0 0</pose>
+       <collision name ='collision_motor2'>
+         <geometry>
+           <box>
+	      <size>0.3 0.4 0.5</size>
+	   </box>
+         </geometry>
+       </collision>
+       <visual name ='visual_motor2'>
+         <geometry>
+           <box>
+	       <size>0.3 0.4 0.5</size>		
+	   </box>
+         </geometry>
+         <material>
+           <ambient>0 0 0 1</ambient>
+           <diffuse>0 0 0 1</diffuse>
+           <specular>0.1 0.1 0.1 1</specular>
+           <emissive>0 0 0 0</emissive>
+         </material>
+       </visual>
+      </link>
+
+
+  <joint type="revolute" name="base_motor2">
+        <pose>0 0 0.45 0 0 0</pose>
+        <child>motor2</child>
+        <parent>base</parent>
+        <axis>
+          <xyz>0 0 0</xyz>
+        </axis>
+      </joint>
+
+  
+      <link name='up_base'>
+        <pose>0 0.0 0.75 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.3 0.4 0.05</size>
+            </box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.2 0.5 0.3</size>
+            </box>
+          </geometry>
+         <material>
+           <ambient>1 1 1 1</ambient>
+           <diffuse>1 1 1 1</diffuse>
+           <specular>0.1 0.1 0.1 1</specular>
+           <emissive>0 0 0 0</emissive>
+         </material>
+        </visual>
+	</link>
+
+  <joint type="revolute" name="tilt">
+        <pose>0 0.0 0.9 0 0 0</pose>
+        <child>up_base</child>
+        <parent>motor2</parent>
+        <axis>
+          <xyz>0 1 0</xyz>
+        </axis>
+      </joint>
+
+
+
+   <include>
+      <uri>model://camera</uri>
+      <pose>0.0 0.0 0.9 0 0 0</pose>
+      <name>camera_img</name>
+    </include>
+  <joint name="up_camera" type="revolute">
+    <child>camera_img::link</child>
+    <parent>up_base</parent>
+    <axis>
+      <xyz>0 0 0</xyz>
+      <limit>
+        <upper>0</upper>
+        <lower>0</lower>
+      </limit>
+    </axis>
+  </joint>
+
+    <plugin filename="libmotors.so" name="motors_plugin">
+      <pan>pan</pan>
+      <tilt>tilt</tilt>
+    </plugin>
+  </model>
+
+      </model>
+    </sdf>
